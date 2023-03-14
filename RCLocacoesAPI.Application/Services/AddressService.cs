@@ -25,6 +25,7 @@ namespace RCLocacoes.Application.Services
             _mapper = mapper;
         }
 
+
         public async Task<BaseOutput<List<Address>>> GetAll()
         {
             var response = new BaseOutput<List<Address>>();
@@ -46,6 +47,34 @@ namespace RCLocacoes.Application.Services
             await _unitOfWork.CommitAsync();
 
             response.Response = addressMapped.Id;
+            response.IsSuccessful = true;
+
+            return response;
+        }
+
+        public async Task<bool> VerifyAddress(int Id)
+        {
+            var entityExists = await _addressRepository.ExistsAsync(x => x.Id == Id);
+
+            return entityExists;
+        }
+
+        public async Task<BaseOutput<bool>> DeleteAddress(int Id)
+        {
+            var response = new BaseOutput<bool>();
+            var address = new Address { Id = Id };
+
+            if (!await VerifyAddress(address.Id))
+            {
+                response.IsSuccessful = false;
+                response.Response = false;
+                response.AddError("Not Found");
+            }
+
+            _addressRepository.Delete(address);
+            await _unitOfWork.CommitAsync();
+
+            response.Response = true;
             response.IsSuccessful = true;
 
             return response;

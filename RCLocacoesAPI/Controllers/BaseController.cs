@@ -15,6 +15,13 @@ namespace RCLocacoes.Api.Controllers
             return StatusCode(500, response);
         }
 
+        protected IActionResult BadRequestResponse(string msg)
+        {
+            var response = new BaseOutput<string>();
+            response.AddError(msg);
+            return StatusCode(400, response);
+        }
+
         protected IActionResult ValidatorErrorResponse(List<ValidationFailure> errors)
         {
             var response = new BaseOutput<string>();

@@ -38,13 +38,16 @@ namespace RCLocacoes.Infra.Ioc
         {
             //APP
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IUserService, UserService>();
 
             //DATA
             services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //VALIDATOR
             services.AddScoped<IValidator<AddressDto>, AddressValidator>();
+            services.AddScoped<IValidator<UserDto>, UserValidator>();
 
         }
     }

@@ -1,14 +1,12 @@
 ﻿using com.raizen.PGC.Application.Models;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Application.Interfaces;
-using RCLocacoes.Application.Validator;
 using RCLocacoes.Domain.Entities;
 using System.Net;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RCLocacoes.Api.Controllers
 {
@@ -38,7 +36,7 @@ namespace RCLocacoes.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(BaseOutput<Address>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Address>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> RegisterAddress([FromBody] AddressDto addressDto, [FromServices] IValidator<AddressDto> validator)
@@ -53,6 +51,27 @@ namespace RCLocacoes.Api.Controllers
                 }
 
                 var response = await _addressService.RegisterAddress(addressDto);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
+        }
+
+        [HttpDelete, Authorize]
+        [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> DeleteAddress([FromQuery] int Id)
+        {
+            try
+            {
+                if (Id <= 0)
+                {
+                    return BadRequestResponse("Incorrect Entry");
+                }
+
+                var response = await _addressService.DeleteAddress(Id);
                 return Ok(response);
             }
             catch (Exception ex)
