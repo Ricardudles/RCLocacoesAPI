@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
-using com.raizen.PGC.Application.Models;
+using RCLocacoes.Application.BaseResponse;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Application.Interfaces;
 using RCLocacoes.Domain.Entities;
 using RCLocacoes.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RCLocacoes.Application.Services
 {

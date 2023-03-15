@@ -1,8 +1,8 @@
-﻿using com.raizen.PGC.Application.Models;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using RCLocacoes.Application.BaseResponse;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Application.Interfaces;
 using RCLocacoes.Domain.Entities;

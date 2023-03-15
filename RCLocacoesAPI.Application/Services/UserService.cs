@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using com.raizen.PGC.Application.Models;
+using RCLocacoes.Application.BaseResponse;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Application.Interfaces;
 using RCLocacoes.Domain.Entities;

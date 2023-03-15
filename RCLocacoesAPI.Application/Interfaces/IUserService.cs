@@ -1,4 +1,4 @@
-﻿using com.raizen.PGC.Application.Models;
+﻿using RCLocacoes.Application.BaseResponse;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Domain.Entities;
 

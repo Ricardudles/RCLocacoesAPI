@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
-namespace com.raizen.PGC.Application.Models
+namespace RCLocacoes.Application.BaseResponse
 {
     public class Response
     {

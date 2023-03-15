@@ -1,10 +1,10 @@
-﻿namespace com.raizen.PGC.Application.Models
+﻿namespace RCLocacoes.Application.BaseResponse
 {
     public class BaseOutput<T> : Response
     {
         public BaseOutput()
         {
-            Response = default;
+            Response = default!;
         }
 
         public BaseOutput(T response)

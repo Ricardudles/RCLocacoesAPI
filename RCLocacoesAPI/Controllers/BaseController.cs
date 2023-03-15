@@ -1,6 +1,6 @@
-﻿using com.raizen.PGC.Application.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using FluentValidation.Results;
+using RCLocacoes.Application.BaseResponse;
 
 namespace RCLocacoes.Api.Controllers
 {
