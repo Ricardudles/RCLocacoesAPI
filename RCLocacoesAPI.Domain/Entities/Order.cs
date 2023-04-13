@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RCLocacoes.Domain.Entities
+﻿namespace RCLocacoes.Domain.Entities
 {
     public class Order : BaseModel
     {
@@ -18,9 +12,9 @@ namespace RCLocacoes.Domain.Entities
         public int LocalId { get; set; }
         public string? Observacao { get; set; }
 
-        public Client Client { get; set; }
-        public Status Status { get; set; }
-        public Local Local { get; set; }
+        public Client? Client { get; set; }
+        public Status? Status { get; set; }
+        public Local? Local { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using com.raizen.PGC.Application.Models;
+﻿using RCLocacoes.Application.BaseResponse;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Domain.Entities;
 
@@ -8,5 +8,7 @@ namespace RCLocacoes.Application.Interfaces
     {
         Task<BaseOutput<List<Address>>> GetAll();
         Task<BaseOutput<int>> RegisterAddress(AddressDto addressDto);
+        Task<bool> VerifyAddress(int Id);
+        Task<BaseOutput<bool>> DeleteAddress(int Id);
     }
 }

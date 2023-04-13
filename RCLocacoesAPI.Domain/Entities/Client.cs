@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RCLocacoes.Domain.Entities
+﻿namespace RCLocacoes.Domain.Entities
 {
     public class Client : BaseModel
     {
@@ -18,7 +12,7 @@ namespace RCLocacoes.Domain.Entities
         public string? Cellphone { get; set; }
         public int AddressId { get; set; }
 
-        public virtual ClientType ClientType { get; set; }
-        public virtual Address Address { get; set; }
+        public virtual ClientType? ClientType { get; set; }
+        public virtual Address? Address { get; set; }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RCLocacoes.Domain.Entities
+﻿namespace RCLocacoes.Domain.Entities
 {
     public class Local : BaseModel
     {
@@ -14,6 +8,6 @@ namespace RCLocacoes.Domain.Entities
         public string? Note { get; set; }
         public string? Contact { get; set; }
 
-        public virtual Address Address { get; set; }
+        public virtual Address? Address { get; set; }
     }
 }

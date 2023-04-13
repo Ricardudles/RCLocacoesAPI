@@ -1,10 +1,5 @@
 ﻿using RCLocacoes.Domain.Interfaces;
 using RCLocacoes.Infra.Data.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RCLocacoes.Infra.Data
 {
@@ -25,6 +20,7 @@ namespace RCLocacoes.Infra.Data
         public void Dispose()
         {
             _context?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
