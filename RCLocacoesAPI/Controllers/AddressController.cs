@@ -6,6 +6,8 @@ using RCLocacoes.Application.BaseResponse;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Application.Interfaces;
 using RCLocacoes.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace RCLocacoes.Api.Controllers
@@ -19,15 +21,14 @@ namespace RCLocacoes.Api.Controllers
             _addressService = addressService;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         [ProducesResponseType(typeof(BaseOutput<List<Address>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Address>>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var response = await _addressService.GetAll();
-                return Ok(response);
+                return CustomResponse(await _addressService.GetAll());
             }
             catch (Exception ex)
             {
@@ -36,22 +37,14 @@ namespace RCLocacoes.Api.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Admin")]
+        [HttpPost("register"), Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(BaseOutput<Address>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Address>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> RegisterAddress([FromBody] AddressDto addressDto, [FromServices] IValidator<AddressDto> validator)
+        public async Task<IActionResult> RegisterAddress([FromBody] AddressDto addressDto)
         {
             try
             {
-                ValidationResult validationResult = validator.Validate(addressDto);
-
-                if (!validationResult.IsValid)
-                {
-                    return ValidatorErrorResponse(validationResult.Errors);
-                }
-
-                var response = await _addressService.RegisterAddress(addressDto);
-                return Ok(response);
+                return ModelState.IsValid ? CustomResponse(await _addressService.RegisterAddress(addressDto)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -59,20 +52,14 @@ namespace RCLocacoes.Api.Controllers
             }
         }
 
-        [HttpDelete, Authorize]
+        [HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteAddress([FromQuery] int Id)
+        public async Task<IActionResult> DeleteAddress([FromQuery, NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {
-                if (Id <= 0)
-                {
-                    return BadRequestResponse("Incorrect Entry");
-                }
-
-                var response = await _addressService.DeleteAddress(Id);
-                return Ok(response);
+                return ModelState.IsValid ? CustomResponse(await _addressService.DeleteAddress(Id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
 using RCLocacoes.Application.BaseResponse;
 using RCLocacoes.Application.DTOs;
 using RCLocacoes.Application.Interfaces;
+using RCLocacoes.Application.Utils;
 using RCLocacoes.Domain.Entities;
 using RCLocacoes.Domain.Interfaces;
 
@@ -12,12 +15,14 @@ namespace RCLocacoes.Application.Services
         private readonly IAddressRepository _addressRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IValidator<AddressDto> _addressDtoValidator;
 
-        public AddressService(IAddressRepository addressRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public AddressService(IAddressRepository addressRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<AddressDto> addressDtoValidator)
         {
             _addressRepository = addressRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _addressDtoValidator = addressDtoValidator;
         }
 
 
@@ -36,6 +41,13 @@ namespace RCLocacoes.Application.Services
         public async Task<BaseOutput<int>> RegisterAddress(AddressDto addressDto)
         {
             var response = new BaseOutput<int>();
+
+            ValidationUtil.ValidateClass(addressDto, _addressDtoValidator, response);
+
+            if (response.Errors.Any())
+            {
+                return response;
+            }
 
             var addressMapped = _mapper.Map<Address>(addressDto);
             await _addressRepository.AddAsync(addressMapped);
